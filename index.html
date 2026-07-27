@@ -47,7 +47,6 @@
 
         .modal-overlay { backdrop-filter: blur(6px); background-color: rgba(15, 23, 42, 0.6); }
 
-        /* Estilo Específico Coach Financeiro */
         .coach-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); position: relative; overflow: hidden; }
         .coach-glow { position: absolute; width: 150px; height: 150px; background: #3b82f6; filter: blur(70px); border-radius: 50%; opacity: 0.3; top: -50px; right: -50px; }
 
@@ -111,7 +110,7 @@
             <div class="sticky top-0 bg-white/90 backdrop-blur border-b border-slate-100 p-6 flex justify-between items-center z-10">
                 <div>
                     <h3 class="text-xl font-black text-slate-800" id="titulo-modal-lancamento">Novo Lançamento Individual</h3>
-                    <p class="text-slate-500 text-xs font-medium mt-0.5">Registre receitas ou despesas simples.</p>
+                    <p class="text-slate-500 text-xs font-medium mt-0.5">Registre receitas ou despesas.</p>
                 </div>
                 <button onclick="fecharModal('modal-lancamento')" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-rose-100 hover:text-rose-600 transition-colors">
                     <i class="fa-solid fa-xmark"></i>
@@ -120,34 +119,43 @@
             <div class="p-6 sm:p-8">
                 <form id="form-lancamento" class="space-y-5">
                     <input type="hidden" id="edit-lancamento-id" value="">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2"><i class="fa-solid fa-wallet text-blue-500 mr-1"></i> Conta Origem</label>
+                            <select id="input-conta" class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none text-slate-700 cursor-pointer">
+                                <option value="main">🏦 Conta Principal (Dinheiro/Banco)</option>
+                                <option value="vr">🍔 Vale Refeição (Benefício VR/VA)</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Natureza</label>
-                            <select id="input-tipo" onchange="atualizarCategoriasFormulario()" class="w-full input-premium rounded-xl border-slate-200 bg-slate-50 border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none text-slate-700 cursor-pointer">
+                            <select id="input-tipo" onchange="atualizarCategoriasFormulario()" class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none text-slate-700 cursor-pointer">
                                 <option value="expense">Saída (Despesa)</option>
                                 <option value="income">Entrada (Receita)</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Valor Total</label>
-                            <input type="number" id="input-valor" step="0.01" placeholder="0.00" required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-bold focus:ring-2 focus:ring-blue-500 outline-none">
+                            <input type="number" id="input-valor" step="0.01" placeholder="0.00" required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-black focus:ring-2 focus:ring-blue-500 outline-none">
                         </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Descrição</label>
-                            <input type="text" id="input-descricao" placeholder="Ex: Conta de Energia, Salário..." required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Categoria</label>
-                            <input type="text" id="input-categoria" list="lista-categorias" placeholder="Selecione ou digite" required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
-                            <datalist id="lista-categorias"></datalist>
+                            <input type="text" id="input-descricao" placeholder="Ex: Conta de Luz, Almoço..." required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Categoria</label>
+                            <input type="text" id="input-categoria" list="lista-categorias" placeholder="Selecionar..." required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
+                            <datalist id="lista-categorias"></datalist>
+                        </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Situação</label>
-                            <select id="input-status" onchange="toggleDataPagamento()" class="w-full input-premium rounded-xl border-slate-200 bg-slate-50 border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none text-slate-700 cursor-pointer">
+                            <select id="input-status" onchange="toggleDataPagamento()" class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none text-slate-700 cursor-pointer">
                                 <option value="pendente">Pendente (Agendado)</option>
                                 <option value="pago">Efetivado (Concluído)</option>
                             </select>
@@ -185,6 +193,7 @@
             <div class="p-6 sm:p-8">
                 <form id="form-divida" class="space-y-6">
                     <input type="hidden" id="edit-rateio-id" value="">
+                    
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
                         <div>
                             <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Fornecedor</label>
@@ -208,8 +217,9 @@
                             <input type="number" id="input-valor-divida" step="0.01" placeholder="0.00" required class="w-full input-premium rounded-xl border-slate-200 bg-white border p-3.5 text-sm font-black text-slate-800 focus:ring-2 focus:ring-violet-500 outline-none">
                         </div>
                         <div class="flex items-end">
-                            <button type="button" onclick="simularAnexo()" class="w-full py-3.5 rounded-xl bg-white border border-slate-300 text-slate-600 font-bold hover:bg-slate-50 transition text-sm flex justify-center items-center gap-2 shadow-sm">
-                                <i id="icon-anexo" class="fa-solid fa-paperclip"></i> <span id="txt-anexo">Anexar Comprovante</span>
+                            <input type="file" id="input-anexo-file" class="hidden" onchange="processarAnexo(this)" accept="image/*,.pdf">
+                            <button type="button" onclick="document.getElementById('input-anexo-file').click()" class="w-full py-3.5 rounded-xl bg-white border border-slate-300 text-slate-600 font-bold hover:bg-slate-50 transition text-sm flex justify-center items-center gap-2 shadow-sm truncate px-2">
+                                <i id="icon-anexo" class="fa-solid fa-paperclip shrink-0"></i> <span id="txt-anexo" class="truncate">Anexar Arquivo</span>
                             </button>
                         </div>
                     </div>
@@ -234,13 +244,15 @@
     <div id="modal-serasa" class="fixed inset-0 z-[120] hidden modal-overlay flex items-center justify-center p-4 transition-all duration-300 opacity-0 scale-95 no-print">
         <div class="bg-white w-full max-w-2xl max-h-[90vh] rounded-[24px] shadow-2xl overflow-y-auto no-scrollbar relative">
             <div class="sticky top-0 bg-white/90 backdrop-blur border-b border-rose-100 p-6 flex justify-between items-center z-10">
-                <h3 class="text-xl font-black text-rose-700"><i class="fa-solid fa-hand-holding-hand mr-2"></i>Registrar Dívida/Acordo</h3>
+                <h3 class="text-xl font-black text-rose-700" id="titulo-modal-serasa"><i class="fa-solid fa-hand-holding-hand mr-2"></i>Registrar Dívida/Acordo</h3>
                 <button onclick="fecharModal('modal-serasa')" class="w-8 h-8 flex items-center justify-center rounded-full bg-rose-50 text-rose-500 hover:bg-rose-100 transition-colors">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <div class="p-6 sm:p-8">
                 <form id="form-serasa" class="space-y-5">
+                    <input type="hidden" id="edit-serasa-id" value="">
+                    
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Credor / Descrição</label>
                         <input type="text" id="input-desc-serasa" placeholder="Ex: Cartão Itaú..." required class="w-full rounded-xl bg-slate-50 border border-slate-200 p-3.5 text-sm font-semibold focus:ring-2 focus:ring-rose-500 outline-none">
@@ -270,7 +282,7 @@
                     </div>
                     <div class="pt-2 flex justify-end gap-3">
                         <button type="button" onclick="fecharModal('modal-serasa')" class="px-6 py-3 rounded-xl text-slate-600 font-bold bg-slate-100 hover:bg-slate-200 transition text-sm">Cancelar</button>
-                        <button type="submit" class="px-8 py-3 rounded-xl text-white font-bold bg-rose-600 hover:bg-rose-700 shadow-md text-sm">Salvar Simulação</button>
+                        <button type="submit" id="btn-submit-serasa" class="px-8 py-3 rounded-xl text-white font-bold bg-rose-600 hover:bg-rose-700 shadow-md text-sm">Salvar Simulação</button>
                     </div>
                 </form>
             </div>
@@ -314,50 +326,70 @@
         <main>
             <!-- ABA 1: VISÃO GERAL -->
             <div id="tab-dashboard" class="tab-content active animate-in">
+                <!-- Cards Conta Principal -->
+                <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-4 ml-1"><i class="fa-solid fa-building-columns text-blue-500 mr-2"></i>Conta Principal (Dinheiro)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 mb-8">
                     <div class="bg-slate-900 text-white p-5 rounded-3xl shadow-lg relative overflow-hidden group">
                         <div class="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 rounded-full bg-white opacity-5 blur-2xl group-hover:opacity-10 transition-opacity duration-500"></div>
                         <div class="flex justify-between items-start mb-4">
-                            <div><p class="text-slate-400 font-bold text-xs uppercase tracking-wider">Saldo em Conta</p></div>
-                            <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center backdrop-blur-sm"><i class="fa-solid fa-building-columns text-white text-xs"></i></div>
+                            <div><p class="text-slate-400 font-bold text-xs uppercase tracking-wider">Saldo Principal</p></div>
                         </div>
-                        <h3 class="valor-display text-2xl sm:text-3xl font-black tracking-tight text-emerald-400" data-val="saldoRealizado">R$ 0,00</h3>
+                        <h3 class="valor-display text-2xl sm:text-3xl font-black tracking-tight text-emerald-400" data-val="saldoRealizadoMain">R$ 0,00</h3>
                     </div>
-
                     <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
                         <div class="flex justify-between items-start mb-4">
                             <div><p class="text-slate-500 font-bold text-xs uppercase tracking-wider">A Receber</p></div>
-                            <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center"><i class="fa-solid fa-arrow-turn-up text-emerald-500 text-xs"></i></div>
                         </div>
-                        <h3 class="valor-display text-xl sm:text-2xl font-black text-emerald-600 tracking-tight" data-val="recPendentes">R$ 0,00</h3>
+                        <h3 class="valor-display text-xl font-black text-emerald-600 tracking-tight" data-val="recPendentesMain">R$ 0,00</h3>
                     </div>
-
                     <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex flex-col justify-between">
                         <div class="flex justify-between items-start mb-4">
                             <div><p class="text-slate-500 font-bold text-xs uppercase tracking-wider">A Pagar</p></div>
-                            <div class="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center"><i class="fa-solid fa-arrow-turn-down text-rose-500 text-xs"></i></div>
                         </div>
-                        <h3 class="valor-display text-xl sm:text-2xl font-black text-rose-600 tracking-tight" data-val="desPendentes">R$ 0,00</h3>
+                        <h3 class="valor-display text-xl font-black text-rose-600 tracking-tight" data-val="desPendentesMain">R$ 0,00</h3>
                     </div>
-
                     <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-3xl shadow-sm border border-blue-100 flex flex-col justify-between">
                         <div class="flex justify-between items-start mb-4">
                             <div><p class="text-blue-800 font-bold text-xs uppercase tracking-wider">Projeção Final</p></div>
-                            <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center"><i class="fa-solid fa-chart-line text-blue-600 text-xs"></i></div>
                         </div>
-                        <h3 class="valor-display text-xl sm:text-2xl font-black text-blue-700 tracking-tight" data-val="saldoProjetado">R$ 0,00</h3>
+                        <h3 class="valor-display text-xl font-black text-blue-700 tracking-tight" data-val="saldoProjetadoMain">R$ 0,00</h3>
                     </div>
                 </div>
 
-                <div class="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm border border-slate-200">
+                <!-- CARTEIRA DE BENEFÍCIOS (VR) -->
+                <h3 class="text-sm font-black text-slate-800 uppercase tracking-widest mb-4 ml-1 mt-8"><i class="fa-solid fa-utensils text-emerald-500 mr-2"></i>Carteira de Benefícios (VR)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 mb-8">
+                    <div class="bg-gradient-to-r from-teal-500 to-emerald-500 rounded-3xl p-5 text-white shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-100">Saldo Atual (VR)</p>
+                            <h3 class="text-2xl font-black valor-display" data-val="saldoRealizadoVR">R$ 0,00</h3>
+                        </div>
+                        <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Recargas Futuras</p>
+                            <h3 class="text-xl font-black text-slate-700 valor-display" data-val="recPendentesVR">R$ 0,00</h3>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Despesas Agendadas (VR)</p>
+                            <h3 class="text-xl font-black text-rose-500 valor-display" data-val="desPendentesVR">R$ 0,00</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm border border-slate-200 mt-10">
                     <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-6 mb-8">
                         <div>
                             <h3 class="text-xl font-black text-slate-800">Simulador do Tempo</h3>
-                            <p class="text-sm text-slate-500 font-medium mt-1">Arraste para prever seu saldo e ver os lançamentos dos próximos dias.</p>
+                            <p class="text-sm text-slate-500 font-medium mt-1">Arraste para prever os saldos e ver os lançamentos dos próximos dias.</p>
                         </div>
-                        <div class="bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100 text-right min-w-[200px]">
+                        <div class="bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100 text-right min-w-[220px]">
                             <p class="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-0.5" id="lbl-data-simulacao">Hoje</p>
-                            <h4 class="text-2xl font-black text-blue-600 valor-dinamico" id="val-saldo-simulado">R$ 0,00</h4>
+                            <h4 class="text-2xl font-black text-blue-600 valor-dinamico" id="val-saldo-simulado-main" title="Conta Principal">R$ 0,00</h4>
+                            <p class="text-[11px] font-bold text-emerald-600 mt-1"><i class="fa-solid fa-utensils"></i> VR: <span id="val-vr-simulado">R$ 0,00</span></p>
                         </div>
                     </div>
                     
@@ -379,13 +411,18 @@
                         <p class="text-sm text-slate-500 mt-1">Gerencie suas despesas e receitas.</p>
                     </div>
                     <button onclick="abrirModalLancamento()" class="px-5 py-3 rounded-xl font-bold bg-blue-600 text-white shadow-md hover:bg-blue-700 transition flex items-center gap-2 text-sm">
-                        <i class="fa-solid fa-plus"></i> Novo Registro
+                        <i class="fa-solid fa-plus"></i> Novo Lançamento
                     </button>
                 </div>
 
                 <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-5 border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-slate-50/50">
                         <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                            <select id="filtro-conta-lanc" onchange="renderizarTabela()" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option value="todos">Conta: Ambas</option>
+                                <option value="main">Somente Conta Principal</option>
+                                <option value="vr">Somente Vale Refeição</option>
+                            </select>
                             <select id="filtro-mes-lanc" onchange="renderizarTabela()" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-semibold focus:ring-2 focus:ring-blue-500 outline-none">
                                 <option value="todos">Período: Todos</option><option value="atual" selected>Período: Mês Atual</option>
                             </select>
@@ -419,7 +456,7 @@
                         <p class="text-sm text-slate-500 mt-1">Divida gastos em 1/3 (Você) e 2/3 (Outros).</p>
                     </div>
                     <div class="flex gap-3">
-                        <button onclick="abrirModal('modal-rateio')" class="px-4 py-2.5 rounded-xl font-bold bg-violet-600 text-white shadow-md hover:bg-violet-700 transition flex items-center gap-2 text-sm">
+                        <button onclick="abrirModalRateio()" class="px-4 py-2.5 rounded-xl font-bold bg-violet-600 text-white shadow-md hover:bg-violet-700 transition flex items-center gap-2 text-sm">
                             <i class="fa-solid fa-plus"></i> Novo Rateio
                         </button>
                         <button onclick="abrirModalPrint()" class="px-4 py-2.5 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition shadow-md flex items-center gap-2">
@@ -432,7 +469,7 @@
 
                 <div class="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                        <h3 class="text-base font-bold text-slate-800">Contas (Ordenadas Menor p/ Maior)</h3>
+                        <h3 class="text-base font-bold text-slate-800">Contas Organizadas (Menor p/ Maior)</h3>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -450,7 +487,7 @@
                         <h2 class="text-2xl font-black text-slate-800 tracking-tight">Central Serasa e Bancos</h2>
                         <p class="text-slate-500 text-sm mt-1">Simule descontos e assuma os acordos mais vantajosos.</p>
                     </div>
-                    <button onclick="abrirModal('modal-serasa')" class="px-5 py-3 rounded-xl font-bold bg-rose-600 text-white shadow-md hover:bg-rose-700 transition flex items-center gap-2 text-sm">
+                    <button onclick="abrirModalSerasa()" class="px-5 py-3 rounded-xl font-bold bg-rose-600 text-white shadow-md hover:bg-rose-700 transition flex items-center gap-2 text-sm">
                         <i class="fa-solid fa-plus"></i> Novo Acordo
                     </button>
                 </div>
@@ -476,20 +513,20 @@
             <div id="tab-charts" class="tab-content">
                 <div class="mb-6">
                     <h2 class="text-2xl font-black text-slate-800 tracking-tight">Análise Financeira</h2>
-                    <p class="text-slate-500 text-sm mt-1">Visualize seus gastos e evolução de forma profissional.</p>
+                    <p class="text-slate-500 text-sm mt-1">Visão total de todos os seus compromissos (Pagos e Agendados).</p>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                     <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-slate-200">
-                        <h3 class="text-base font-black text-slate-800 mb-6">Despesas por Categoria</h3>
+                        <h3 class="text-base font-black text-slate-800 mb-6">Despesas por Categoria (Mês Atual)</h3>
                         <div class="relative min-h-[280px] flex items-center justify-center"><canvas id="chartCategorias"></canvas></div>
                     </div>
                     <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-slate-200">
-                        <h3 class="text-base font-black text-slate-800 mb-6">Receitas vs. Despesas</h3>
+                        <h3 class="text-base font-black text-slate-800 mb-6">Balanço Total de Fluxo</h3>
                         <div class="relative min-h-[280px] flex items-center justify-center"><canvas id="chartBalanco"></canvas></div>
                     </div>
                 </div>
                 <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-slate-200 w-full">
-                    <h3 class="text-base font-black text-slate-800 mb-6">Evolução do Saldo Diário (30 Dias)</h3>
+                    <h3 class="text-base font-black text-slate-800 mb-6">Evolução do Saldo (Próximos / Últimos 30 Dias)</h3>
                     <div class="relative min-h-[350px] w-full flex items-center justify-center"><canvas id="chartEvolucao"></canvas></div>
                 </div>
             </div>
@@ -504,7 +541,7 @@
                 <div class="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-sm border border-slate-200 mb-8">
                     <form id="form-planejamento" class="flex flex-col sm:flex-row gap-4 items-end" onsubmit="gerarPlanejamento(event)">
                         <div class="flex-1 w-full">
-                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Qual o valor total que você planeja receber neste mês?</label>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-2">Qual o valor total líquido (na conta) que você recebe neste mês?</label>
                             <input type="number" id="input-renda-coach" step="0.01" placeholder="Ex: 5000.00" required class="w-full input-premium rounded-xl border-slate-200 bg-slate-50 border p-4 text-xl font-black text-emerald-700 focus:ring-2 focus:ring-emerald-500 outline-none">
                         </div>
                         <button type="submit" class="w-full sm:w-auto px-8 py-4 rounded-xl text-white font-bold bg-slate-900 hover:bg-slate-800 transition-all shadow-md text-sm shrink-0 flex items-center justify-center gap-2">
@@ -522,7 +559,7 @@
                                 <i class="fa-solid fa-user-tie text-4xl text-emerald-400"></i>
                             </div>
                             <div>
-                                <h3 class="text-2xl font-black text-white mb-2">Diagnóstico do seu Contador Virtual</h3>
+                                <h3 class="text-2xl font-black text-white mb-2">Diagnóstico do seu Consultor Virtual</h3>
                                 <p class="text-slate-300 text-sm leading-relaxed" id="coach-insight-main">Aguardando dados...</p>
                             </div>
                         </div>
@@ -534,9 +571,9 @@
                     </div>
 
                     <div class="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 p-8 rounded-[2rem] shadow-sm">
-                        <h4 class="text-sm font-bold text-indigo-800 uppercase tracking-widest mb-4"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i> Dica de Ouro / Sai da Caixa</h4>
+                        <h4 class="text-sm font-bold text-indigo-800 uppercase tracking-widest mb-4"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i> Dica de Ouro (Blindagem Patrimonial)</h4>
                         <p class="text-slate-700 font-medium text-sm leading-relaxed">
-                            O segredo da riqueza não é ganhar muito, é ter <strong>velocidade de conversão</strong>. Cada real que fica parado na conta corrente sofre com a inflação invisível. Automatize suas transferências no dia em que o salário cai. Se você deixar para investir o que sobra, nunca sobrará. Se você pagar suas dívidas com prioridade máxima, garante um "lucro" instantâneo equivalente aos juros que deixará de pagar. Proteja seu patrimônio de si mesmo!
+                            O segredo da riqueza não é ganhar muito, é ter <strong>velocidade de conversão</strong>. Cada real que fica parado na conta corrente sofre com a inflação invisível e com os impulsos do dia a dia. Automatize suas transferências de investimento e pagamento de dívidas no exato dia em que o salário cai. Se você deixar para investir "o que sobra", nunca sobrará. Proteja o seu patrimônio de você mesmo!
                         </p>
                     </div>
                 </div>
@@ -549,7 +586,7 @@
         // --- CONSTANTES & FIREBASE ---
         const FIREBASE_URL = 'https://financeiro-b886e-default-rtdb.firebaseio.com/appData.json';
         const CATEGORIAS_RECEITA = ['Salário', 'Investimentos', 'Vendas', 'Cashback', 'Vale Refeição', 'Vale Transporte', 'Outros'];
-        const CATEGORIAS_DESPESA = ['Alimentação', 'Moradia', 'Transporte', 'Saúde', 'Lazer', 'Educação', 'Supermercado', 'Plano de Saúde', 'Cartão de Crédito', 'Acordo/Negociação', 'Outros'];
+        const CATEGORIAS_DESPESA = ['Alimentação', 'Moradia', 'Transporte', 'Saúde', 'Lazer', 'Educação', 'Supermercado', 'Plano de Saúde', 'Cartão de Crédito', 'Acordo/Negociação', 'Refeição (VR)', 'Outros'];
         const CORES_GRAFICO = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#64748b', '#0f172a', '#eab308'];
 
         let dataAtual = new Date(); let mes = String(dataAtual.getMonth() + 1).padStart(2, '0'); let ano = dataAtual.getFullYear();
@@ -557,13 +594,14 @@
         let transactions = [];
         let debts = [];
         let serasaItems = [];
-        let pessoasCadastradas = ['Adrielle', 'Luiz']; // Default fallback
+        let pessoasCadastradas = ['Adrielle', 'Luiz']; 
         let coresPessoas = ['orange', 'indigo', 'emerald', 'sky', 'fuchsia', 'teal', 'rose', 'blue'];
+        let anexoAtual = null;
 
         let privacyMode = true; 
         let graficoPieInstance = null, chCategorias = null, chBalanco = null, chEvolucao = null;
 
-        // --- INTEGRAÇÃO FIREBASE (NOVO) ---
+        // --- INTEGRAÇÃO FIREBASE ---
         async function carregarBancoDeDados() {
             try {
                 document.getElementById('lbl-status-db').innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-blue-500"></i> Conectando à Nuvem...';
@@ -576,11 +614,12 @@
                     serasaItems = data.serasaItems || [];
                     pessoasCadastradas = data.pessoasCadastradas || ['Adrielle', 'Luiz'];
                 }
-                document.getElementById('lbl-status-db').innerHTML = '<i class="fa-solid fa-cloud text-emerald-500"></i> Sincronizado. Seu dinheiro, regras claras.';
+                document.getElementById('lbl-status-db').innerHTML = '<i class="fa-solid fa-cloud text-emerald-500"></i> Sincronizado. Backup Automático Ativo.';
             } catch (error) {
                 console.error("Erro ao carregar DB:", error);
                 document.getElementById('lbl-status-db').innerHTML = '<i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Modo Offline (Falha ao conectar).';
             }
+            renderizarCheckboxesPessoas(); // Garante atualização
             atualizarTudo();
         }
 
@@ -615,10 +654,20 @@
         function abrirModalLancamento() {
             document.getElementById('edit-lancamento-id').value = '';
             document.getElementById('form-lancamento').reset();
+            document.getElementById('input-conta').value = 'main';
             document.getElementById('input-data-venc').value = new Date().toISOString().split('T')[0];
-            document.getElementById('titulo-modal-lancamento').textContent = "Novo Lançamento Individual";
+            document.getElementById('titulo-modal-lancamento').innerHTML = "Novo Lançamento Individual";
             document.getElementById('btn-submit-lancamento').innerHTML = "Salvar Registro";
             abrirModal('modal-lancamento');
+        }
+
+        function abrirModalSerasa() {
+            document.getElementById('edit-serasa-id').value = '';
+            document.getElementById('form-serasa').reset();
+            document.getElementById('input-venc-serasa').value = new Date().toISOString().split('T')[0];
+            document.getElementById('titulo-modal-serasa').innerHTML = `<i class="fa-solid fa-hand-holding-hand mr-2"></i>Registrar Dívida/Acordo`;
+            document.getElementById('btn-submit-serasa').innerHTML = "Salvar Simulação";
+            abrirModal('modal-serasa');
         }
 
         function gerarId() { return Math.random().toString(36).substr(2, 9); }
@@ -648,22 +697,39 @@
                 const btn = document.getElementById(`btn-tab-${id}`);
                 if(btn && id !== 'planning') btn.className = (id === tabId) ? bAtivo : bInativo;
             });
-            if(tabId === 'dashboard') { document.getElementById('slider-tempo').value = 0; atualizarSimulador(0); }
+            // Mantém a data do simulador na visão geral sem resetar para 0
+            if(tabId === 'dashboard') { atualizarSimulador(document.getElementById('slider-tempo').value); }
             if(tabId === 'charts') setTimeout(renderizarGraficosCompletos, 100);
         }
 
         // --- DASHBOARD ---
         function atualizarDashboard() {
-            let saldoRealizado = 0, recPendentes = 0, desPendentes = 0;
+            let sRealMain = 0, rPendMain = 0, dPendMain = 0;
+            let sRealVR = 0, rPendVR = 0, dPendVR = 0;
+
             transactions.forEach(t => {
                 const v = parseFloat(t.amount);
-                if (t.status === 'pago') { if (t.type === 'income') saldoRealizado += v; else saldoRealizado -= v; } 
-                else if (t.status === 'pendente') { if (t.type === 'income') recPendentes += v; else desPendentes += v; }
+                const isVR = t.wallet === 'vr';
+                if (t.status === 'pago') { 
+                    if (t.type === 'income') { isVR ? sRealVR+=v : sRealMain+=v; } 
+                    else { isVR ? sRealVR-=v : sRealMain-=v; }
+                } else if (t.status === 'pendente') { 
+                    if (t.type === 'income') { isVR ? rPendVR+=v : rPendMain+=v; } 
+                    else { isVR ? dPendVR+=v : dPendMain+=v; }
+                }
             });
-            document.querySelector('[data-val="saldoRealizado"]').textContent = formatarMoeda(saldoRealizado);
-            document.querySelector('[data-val="recPendentes"]').textContent = formatarMoeda(recPendentes);
-            document.querySelector('[data-val="desPendentes"]').textContent = formatarMoeda(desPendentes);
-            document.querySelector('[data-val="saldoProjetado"]').textContent = formatarMoeda(saldoRealizado + recPendentes - desPendentes);
+
+            // Main
+            document.querySelector('[data-val="saldoRealizadoMain"]').textContent = formatarMoeda(sRealMain);
+            document.querySelector('[data-val="recPendentesMain"]').textContent = formatarMoeda(rPendMain);
+            document.querySelector('[data-val="desPendentesMain"]').textContent = formatarMoeda(dPendMain);
+            document.querySelector('[data-val="saldoProjetadoMain"]').textContent = formatarMoeda(sRealMain + rPendMain - dPendMain);
+
+            // VR
+            document.querySelector('[data-val="saldoRealizadoVR"]').textContent = formatarMoeda(sRealVR);
+            document.querySelector('[data-val="recPendentesVR"]').textContent = formatarMoeda(rPendVR);
+            document.querySelector('[data-val="desPendentesVR"]').textContent = formatarMoeda(dPendVR);
+
             atualizarSimulador(document.getElementById('slider-tempo').value);
         }
 
@@ -671,21 +737,29 @@
             diasAdicionais = parseInt(diasAdicionais);
             let dataAlvo = new Date(); dataAlvo.setHours(0,0,0,0); dataAlvo.setDate(dataAlvo.getDate() + diasAdicionais);
             document.getElementById('lbl-data-simulacao').textContent = diasAdicionais === 0 ? 'Saldo de Hoje' : `Previsão: ${dataAlvo.toLocaleDateString('pt-BR')}`;
-            let saldoSimulado = 0; let transacoesNoDia = [];
-            transactions.forEach(t => { if (t.status === 'pago') saldoSimulado += (t.type === 'income' ? t.amount : -t.amount); });
+            
+            let saldoMain = 0, saldoVR = 0; let transacoesNoDia = [];
+            
+            transactions.forEach(t => { 
+                if (t.status === 'pago') { if(t.wallet === 'vr') saldoVR += (t.type === 'income'?t.amount:-t.amount); else saldoMain += (t.type === 'income'?t.amount:-t.amount); } 
+            });
+            
             transactions.forEach(t => {
                 if(t.status === 'pendente') {
                     const tvenc = new Date(t.dueDate + 'T00:00:00');
-                    if(tvenc <= dataAlvo) saldoSimulado += (t.type === 'income' ? t.amount : -t.amount);
+                    if(tvenc <= dataAlvo) { if(t.wallet === 'vr') saldoVR += (t.type === 'income'?t.amount:-t.amount); else saldoMain += (t.type === 'income'?t.amount:-t.amount); }
                     if(tvenc.getTime() === dataAlvo.getTime()) transacoesNoDia.push(t);
                 }
             });
-            document.getElementById('val-saldo-simulado').textContent = formatarMoeda(saldoSimulado);
+
+            document.getElementById('val-saldo-simulado-main').textContent = formatarMoeda(saldoMain);
+            document.getElementById('val-vr-simulado').textContent = formatarMoeda(saldoVR);
+            
             const contEventos = document.getElementById('container-eventos-simulacao');
             if(diasAdicionais === 0) { contEventos.innerHTML = `<div class="col-span-full text-center p-5 bg-slate-50 rounded-xl text-slate-400 font-medium text-sm border border-slate-100">Deslize a barra para o futuro.</div>`; return; }
             if(transacoesNoDia.length === 0) { contEventos.innerHTML = `<div class="col-span-full text-center p-4 bg-slate-50 rounded-xl text-slate-400 font-medium text-sm">Sem movimentações exatas neste dia.</div>`; } 
             else {
-                contEventos.innerHTML = transacoesNoDia.map(t => `<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full ${t.type==='income'?'bg-emerald-100 text-emerald-600':'bg-rose-100 text-rose-600'} flex items-center justify-center"><i class="fa-solid ${t.type==='income'?'fa-arrow-down':'fa-arrow-up'} text-xs"></i></div><div><p class="text-sm font-bold text-slate-800">${t.description}</p><p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">${t.category}</p></div></div><div class="text-right font-black ${t.type==='income'?'text-emerald-600':'text-rose-600'} text-sm">${t.type==='income'?'+':'-'} ${formatarMoeda(t.amount)}</div></div>`).join('');
+                contEventos.innerHTML = transacoesNoDia.map(t => `<div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full ${t.type==='income'?'bg-emerald-100 text-emerald-600':'bg-rose-100 text-rose-600'} flex items-center justify-center"><i class="fa-solid ${t.type==='income'?'fa-arrow-down':'fa-arrow-up'} text-xs"></i></div><div><p class="text-sm font-bold text-slate-800">${t.description} ${t.wallet==='vr'?'<span class="bg-teal-100 text-teal-700 text-[8px] px-1 rounded ml-1">VR</span>':''}</p><p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">${t.category}</p></div></div><div class="flex items-center gap-3"><div class="text-right font-black ${t.type==='income'?'text-emerald-600':'text-rose-600'} text-sm">${t.type==='income'?'+':'-'} ${formatarMoeda(t.amount)}</div><button onclick="editarTransacao('${t.id}')" class="w-6 h-6 bg-slate-50 hover:bg-blue-100 text-slate-400 hover:text-blue-600 rounded flex justify-center items-center transition" title="Editar Lançamento"><i class="fa-solid fa-pen text-[10px]"></i></button></div></div>`).join('');
             }
         }
 
@@ -704,27 +778,31 @@
         function renderizarTabela() {
             const corpo = document.getElementById('tabela-corpo'); if(!corpo) return;
             const termo = (document.getElementById('input-busca-lanc')?.value || '').toLowerCase();
+            const contaFiltro = document.getElementById('filtro-conta-lanc')?.value || 'todos';
             const mesFiltro = document.getElementById('filtro-mes-lanc')?.value || 'todos';
             const statusFiltro = document.getElementById('filtro-status-lanc')?.value || 'todos';
             const mesAtual = `${ano}-${mes}`;
+
             let filtrados = transactions.filter(t => {
                 let textMatch = t.description.toLowerCase().includes(termo) || t.category.toLowerCase().includes(termo);
                 let statusMatch = statusFiltro === 'todos' || t.status === statusFiltro;
+                let contaMatch = contaFiltro === 'todos' || (t.wallet || 'main') === contaFiltro;
                 let dataRef = t.status === 'pago' ? t.paidDate : t.dueDate;
                 let mesMatch = mesFiltro === 'todos' || mesDeDataString(dataRef) === mesAtual;
-                return textMatch && statusMatch && mesMatch;
+                return textMatch && statusMatch && contaMatch && mesMatch;
             });
             corpo.innerHTML = '';
-            if (filtrados.length === 0) { corpo.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-slate-400 font-medium">Sem dados.</td></tr>`; return; }
+            if (filtrados.length === 0) { corpo.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-slate-400 font-medium">Sem dados encontrados.</td></tr>`; return; }
+
             filtrados.forEach(t => {
-                const isR = t.type === 'income', isP = t.status === 'pago';
+                const isR = t.type === 'income', isP = t.status === 'pago', isVR = t.wallet === 'vr';
                 corpo.innerHTML += `
                     <tr class="hover:bg-slate-50/80 transition-colors border-b border-slate-50">
                         <td class="p-4"><div class="flex items-center gap-3"><div class="w-2 h-2 rounded-full ${isP ? 'bg-emerald-400' : 'bg-amber-400'}"></div><div><div class="text-xs font-bold text-slate-700">${isP ? formatarDataBr(t.paidDate) : formatarDataBr(t.dueDate)}</div><div class="text-[9px] uppercase tracking-wider font-bold ${isP ? 'text-emerald-600' : 'text-amber-600'}">${isP ? 'Pago' : 'Pend.'}</div></div></div></td>
-                        <td class="p-4 font-bold text-slate-800 text-sm">${t.description}<div class="mt-1"><span class="inline-flex bg-slate-100 text-slate-500 text-[9px] uppercase tracking-widest font-bold px-1.5 py-0.5 rounded border border-slate-200">${t.category}</span></div></td>
+                        <td class="p-4 font-bold text-slate-800 text-sm">${t.description} ${isVR?'<span class="bg-teal-100 text-teal-700 text-[8px] px-1 rounded align-top">VR</span>':''}<div class="mt-1"><span class="inline-flex bg-slate-100 text-slate-500 text-[9px] uppercase tracking-widest font-bold px-1.5 py-0.5 rounded border border-slate-200">${t.category}</span></div></td>
                         <td class="p-4 text-right font-black text-sm ${isR ? 'text-emerald-600' : 'text-slate-800'}">${isR ? '+' : '-'} ${formatarMoeda(t.amount)}</td>
                         <td class="p-4 text-center">
-                            ${!isP ? `<button onclick="marcarComoPago('${t.id}')" class="px-3 py-1 bg-slate-50 text-slate-600 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 rounded-lg text-xs font-bold transition-all shadow-sm mb-1 w-full max-w-[80px]">Baixar</button><br>` : ''}
+                            ${!isP ? `<button onclick="marcarComoPago('${t.id}')" class="px-3 py-1 bg-slate-50 text-slate-600 border border-slate-200 hover:border-emerald-500 hover:text-emerald-600 rounded-lg text-xs font-bold transition-all shadow-sm mb-1 w-full max-w-[90px]">Baixar</button><br>` : ''}
                             <div class="flex items-center justify-center gap-3 mt-1">
                                 <button onclick="editarTransacao('${t.id}')" class="text-[10px] font-bold text-slate-400 hover:text-blue-500 uppercase tracking-widest transition-colors"><i class="fa-solid fa-pen"></i> Editar</button>
                                 <button onclick="excluirTransacao('${t.id}')" class="text-[10px] font-bold text-slate-400 hover:text-rose-500 uppercase tracking-widest transition-colors"><i class="fa-solid fa-trash"></i> Excluir</button>
@@ -737,6 +815,7 @@
         function editarTransacao(id) {
             let t = transactions.find(x => x.id === id); if(!t) return;
             document.getElementById('edit-lancamento-id').value = t.id;
+            document.getElementById('input-conta').value = t.wallet || 'main';
             document.getElementById('input-tipo').value = t.type;
             atualizarCategoriasFormulario();
             document.getElementById('input-valor').value = t.amount;
@@ -781,7 +860,30 @@
                 pessoasCadastradas = pessoasCadastradas.filter(p => p !== nome); renderizarCheckboxesPessoas(); atualizarTudo(); sincronizarNuvem(); 
             } 
         }
-        function simularAnexo() { const ic = document.getElementById('icon-anexo'); const tx = document.getElementById('txt-anexo'); ic.className = 'fa-solid fa-file-circle-check text-emerald-500'; tx.textContent = 'Anexado!'; tx.classList.add('text-emerald-600'); }
+
+        function processarAnexo(input) {
+            if(input.files && input.files[0]) {
+                anexoAtual = input.files[0].name;
+                const ic = document.getElementById('icon-anexo'); const tx = document.getElementById('txt-anexo');
+                ic.className = 'fa-solid fa-file-circle-check text-emerald-500 shrink-0';
+                tx.textContent = anexoAtual; tx.classList.add('text-emerald-600');
+            }
+        }
+
+        function abrirModalRateio() {
+            document.getElementById('edit-rateio-id').value = '';
+            document.getElementById('form-divida').reset();
+            anexoAtual = null;
+            document.getElementById('icon-anexo').className = 'fa-solid fa-paperclip shrink-0';
+            document.getElementById('txt-anexo').textContent = 'Anexar Arquivo';
+            document.getElementById('txt-anexo').classList.remove('text-emerald-600');
+            document.getElementById('input-vencimento-divida').value = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('.check-participante').forEach(c => c.checked = false);
+            document.getElementById('titulo-form-rateio').innerHTML = "Nova Conta p/ Compartilhar";
+            document.getElementById('btn-submit-rateio').innerHTML = "Salvar Rateio";
+            atualizarRegraDivisao();
+            abrirModal('modal-rateio');
+        }
 
         function renderizarTabelaDividas() {
             const corpo = document.getElementById('tabela-dividas-corpo'); const thead = document.getElementById('tabela-dividas-head'); const resumo = document.getElementById('resumo-cards-dinamicos');
@@ -799,12 +901,14 @@
             pessoasCadastradas.forEach(p => { cardsHtml += `<div class="shrink-0 w-56 snap-center bg-white p-5 rounded-3xl shadow-sm border border-${getCorPessoa(p)}-100 border-r-4 border-r-${getCorPessoa(p)}-500"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Repasses: ${p}</p><h3 class="text-xl font-black text-${getCorPessoa(p)}-600">${formatarMoeda(totaisP[p])}</h3></div>`; });
             resumo.innerHTML = cardsHtml;
 
-            corpo.innerHTML = ''; if (filtrados.length === 0) { corpo.innerHTML = `<tr><td colspan="10" class="p-10 text-center text-slate-400 font-medium">Vazio.</td></tr>`; return; }
+            corpo.innerHTML = ''; if (filtrados.length === 0) { corpo.innerHTML = `<tr><td colspan="10" class="p-10 text-center text-slate-400 font-medium">Nenhum rateio registrado.</td></tr>`; return; }
 
             filtrados.forEach(d => {
                 const penMeu = d.myShare - d.myPaid;
                 const bPessoa = (v, pnd, ptc) => !ptc ? '<span class="text-slate-300 text-[9px] font-bold">N/A</span>' : (!pnd ? `<span class="text-emerald-600 font-bold text-[10px]"><i class="fa-solid fa-check"></i> Pago</span>` : `<span class="text-slate-700 font-black text-xs">${formatarMoeda(v)}</span>`);
-                let tr = `<tr class="hover:bg-slate-50/50 border-b border-slate-100"><td class="p-4 font-bold text-slate-600 text-xs">${formatarDataBr(d.dueDate)}</td><td class="p-4"><div class="font-bold text-slate-900 text-sm">${d.description} ${d.hasAttachment?'<i class="fa-solid fa-paperclip text-emerald-500"></i>':''}</div><div class="text-[9px] text-slate-500 font-bold uppercase mt-1">${d.origin}</div></td><td class="p-4 text-right font-black text-slate-700 text-sm bg-slate-50/30">${formatarMoeda(d.amount)}</td><td class="p-4 text-center border-l border-rose-50 bg-white">${bPessoa(penMeu, penMeu>0, true)}${penMeu>0?`<br><button onclick="transferirParaDespesa('${d.id}')" class="text-[9px] font-bold text-blue-600 mt-2 flex items-center justify-center gap-1 bg-blue-50 px-2 py-1 mx-auto rounded w-full max-w-[80px]">Assumir</button>`:''}</td>`;
+                let anexoIco = d.hasAttachment ? `<i class="fa-solid fa-paperclip text-emerald-500 ml-1" title="Anexo: ${d.hasAttachment}"></i>` : '';
+                
+                let tr = `<tr class="hover:bg-slate-50/50 border-b border-slate-100"><td class="p-4 font-bold text-slate-600 text-xs">${formatarDataBr(d.dueDate)}</td><td class="p-4"><div class="font-bold text-slate-900 text-sm">${d.description} ${anexoIco}</div><div class="text-[9px] text-slate-500 font-bold uppercase mt-1">${d.origin}</div></td><td class="p-4 text-right font-black text-slate-700 text-sm bg-slate-50/30">${formatarMoeda(d.amount)}</td><td class="p-4 text-center border-l border-rose-50 bg-white">${bPessoa(penMeu, penMeu>0, true)}${penMeu>0?`<br><button onclick="transferirParaDespesa('${d.id}')" class="text-[9px] font-bold text-blue-600 mt-2 flex items-center justify-center gap-1 bg-blue-50 px-2 py-1 mx-auto rounded w-full max-w-[80px]">Assumir</button>`:''}</td>`;
                 pessoasCadastradas.forEach(p => { const pnd = d.sharedWith.includes(p); const v = pnd?((d.shares[p]||0)-(d.paid[p]||0)):0; tr += `<td class="p-4 text-center border-l border-${getCorPessoa(p)}-50/50 bg-white">${bPessoa(v, v>0, pnd)}${(pnd&&v>0)?`<br><button onclick="marcarPagoTerc('${d.id}','${p}')" class="text-[9px] font-bold text-emerald-600 mt-2 bg-emerald-50 px-2 py-1 mx-auto rounded w-full max-w-[80px]">Recebi</button>`:''}</td>`; });
                 tr += `<td class="p-4 text-center border-l border-slate-100"><button onclick="editarRateio('${d.id}')" class="text-slate-400 hover:text-blue-600 mx-1"><i class="fa-solid fa-pen"></i></button><button onclick="excluirDivida('${d.id}')" class="text-slate-400 hover:text-rose-600 mx-1"><i class="fa-solid fa-trash-can"></i></button></td></tr>`; corpo.innerHTML += tr;
             });
@@ -813,18 +917,22 @@
         function editarRateio(id) {
             let d = debts.find(x => x.id === id); if(!d) return;
             document.getElementById('edit-rateio-id').value = d.id; document.getElementById('input-tipo-divida').value = d.origin; document.getElementById('input-descricao-divida').value = d.description; document.getElementById('input-vencimento-divida').value = d.dueDate; document.getElementById('input-valor-divida').value = d.amount;
+            
+            if (d.hasAttachment) { anexoAtual = d.hasAttachment; document.getElementById('icon-anexo').className = 'fa-solid fa-file-circle-check text-emerald-500 shrink-0'; document.getElementById('txt-anexo').textContent = anexoAtual; document.getElementById('txt-anexo').classList.add('text-emerald-600'); } 
+            else { anexoAtual = null; document.getElementById('icon-anexo').className = 'fa-solid fa-paperclip shrink-0'; document.getElementById('txt-anexo').textContent = 'Anexar Arquivo'; document.getElementById('txt-anexo').classList.remove('text-emerald-600'); }
+
             document.querySelectorAll('.check-participante').forEach(c => c.checked = false); d.sharedWith.forEach(p => { const c = document.getElementById(`check-pessoa-${p}`); if(c) c.checked = true; });
-            document.getElementById('titulo-form-rateio').innerHTML = `Editando Rateio`; document.getElementById('btn-submit-rateio').innerHTML = `Atualizar`; atualizarRegraDivisao(); abrirModal('modal-rateio');
+            document.getElementById('titulo-form-rateio').innerHTML = `<i class="fa-solid fa-pen text-blue-500 mr-2"></i>Editando Rateio`; document.getElementById('btn-submit-rateio').innerHTML = `Atualizar Rateio`; atualizarRegraDivisao(); abrirModal('modal-rateio');
         }
-        function cancelarEdicaoRateio() { document.getElementById('edit-rateio-id').value=''; document.getElementById('form-divida')?.reset(); document.querySelectorAll('.check-participante').forEach(c => c.checked=false); document.getElementById('titulo-form-rateio').innerHTML=`Nova Conta p/ Compartilhar`; document.getElementById('btn-submit-rateio').innerHTML=`Salvar Rateio`; const i=document.getElementById('icon-anexo'); const t=document.getElementById('txt-anexo'); if(i) {i.className='fa-solid fa-paperclip'; t.textContent='Anexar Comprovante'; t.classList.remove('text-emerald-600');} atualizarRegraDivisao(); }
+        function cancelarEdicaoRateio() { document.getElementById('edit-rateio-id').value=''; document.getElementById('form-divida')?.reset(); document.querySelectorAll('.check-participante').forEach(c => c.checked=false); document.getElementById('titulo-form-rateio').innerHTML=`Nova Conta p/ Compartilhar`; document.getElementById('btn-submit-rateio').innerHTML=`Salvar Rateio`; const i=document.getElementById('icon-anexo'); const t=document.getElementById('txt-anexo'); if(i) {i.className='fa-solid fa-paperclip shrink-0'; t.textContent='Anexar Arquivo'; t.classList.remove('text-emerald-600');} atualizarRegraDivisao(); }
         
-        function transferirParaDespesa(id) { let d = debts.find(x => x.id === id); if(!d) return; const p = d.myShare - d.myPaid; if(p>0){transactions.unshift({id:gerarId(),type:'expense',description:`Rateio: ${d.description}`,amount:p,category:d.origin,status:'pendente',dueDate:d.dueDate,paidDate:''}); d.myPaid+=p; atualizarTudo(); sincronizarNuvem(); mostrarToast('Despesa criada!');} }
+        function transferirParaDespesa(id) { let d = debts.find(x => x.id === id); if(!d) return; const p = d.myShare - d.myPaid; if(p>0){transactions.unshift({id:gerarId(),wallet:'main',type:'expense',description:`Rateio: ${d.description}`,amount:p,category:d.origin,status:'pendente',dueDate:d.dueDate,paidDate:''}); d.myPaid+=p; atualizarTudo(); sincronizarNuvem(); mostrarToast('Despesa criada!');} }
         function marcarPagoTerc(id, p) { let d = debts.find(x => x.id === id); if(d&&d.sharedWith.includes(p)){d.paid[p]+=((d.shares[p]||0)-(d.paid[p]||0)); atualizarTudo(); sincronizarNuvem(); mostrarToast('Recebido!');} }
         
         function excluirDivida(id) { 
-            if(!confirm("Tem certeza que deseja excluir esta conta de rateio?")) return;
+            if(!confirm("Tem certeza que deseja excluir esta conta de rateio permanentemente?")) return;
             debts = debts.filter(d => d.id !== id); 
-            atualizarTudo(); sincronizarNuvem(); mostrarToast("Excluído!");
+            atualizarTudo(); sincronizarNuvem(); mostrarToast("Rateio Excluído!");
         }
 
         // --- SERASA ---
@@ -832,40 +940,67 @@
             const corpo = document.getElementById('tabela-serasa-corpo'); const res = document.getElementById('resumo-serasa'); if(!corpo) return;
             let tOrig=0, tPag=0; let filt = [...serasaItems].sort((a,b) => (a.amount*(1-a.discount/100)) - (b.amount*(1-b.discount/100)));
             corpo.innerHTML = '';
-            if (filt.length===0) { corpo.innerHTML = `<tr><td colspan="5" class="p-10 text-center text-slate-400">Sem dívidas registradas.</td></tr>`; res.innerHTML=`<div class="col-span-full bg-emerald-50 text-emerald-700 p-5 rounded-2xl border border-emerald-100 text-center font-bold">Nenhum acordo pendente!</div>`; return; }
+            if (filt.length===0) { corpo.innerHTML = `<tr><td colspan="5" class="p-10 text-center text-slate-400">Sem dívidas registradas.</td></tr>`; res.innerHTML=`<div class="col-span-full bg-emerald-50 text-emerald-700 p-5 rounded-2xl border border-emerald-100 text-center font-bold">Nenhum acordo pendente no Serasa/Bancos!</div>`; return; }
             filt.forEach(s => { const vF = s.amount * (1 - s.discount/100); tOrig+=s.amount; tPag+=vF;
-                corpo.innerHTML += `<tr class="hover:bg-rose-50/30 border-b border-slate-50"><td class="p-4"><div class="font-bold text-slate-800 text-sm">${s.description}</div><div class="mt-1"><span class="text-[9px] uppercase tracking-widest font-bold ${s.status==='Negativada'?'bg-rose-100 text-rose-700':'bg-orange-100 text-orange-700'} px-1.5 py-0.5 rounded">${s.status}</span></div></td><td class="p-4 text-right text-slate-400 line-through text-xs">${formatarMoeda(s.amount)}</td><td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-700 font-black text-xs px-2 py-1 rounded">-${s.discount}%</span></td><td class="p-4 text-right font-black text-base text-rose-600">${formatarMoeda(vF)}</td><td class="p-4 text-center"><button onclick="assumirSerasa('${s.id}')" class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-[10px] font-bold w-full mb-1">Assumir</button><br><button onclick="excluirSerasa('${s.id}')" class="text-[10px] font-bold text-slate-400 hover:text-rose-500">Excluir</button></td></tr>`;
+                corpo.innerHTML += `<tr class="hover:bg-rose-50/30 border-b border-slate-50"><td class="p-4"><div class="font-bold text-slate-800 text-sm">${s.description}</div><div class="mt-1"><span class="text-[9px] uppercase tracking-widest font-bold ${s.status==='Negativada'?'bg-rose-100 text-rose-700':'bg-orange-100 text-orange-700'} px-1.5 py-0.5 rounded">${s.status}</span></div></td><td class="p-4 text-right text-slate-400 line-through text-xs">${formatarMoeda(s.amount)}</td><td class="p-4 text-center"><span class="bg-emerald-100 text-emerald-700 font-black text-xs px-2 py-1 rounded">-${s.discount}%</span></td><td class="p-4 text-right font-black text-base text-rose-600">${formatarMoeda(vF)}</td><td class="p-4 text-center"><button onclick="assumirSerasa('${s.id}')" class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-[10px] font-bold w-full mb-1 hover:bg-slate-800 transition-colors">Assumir</button><br><div class="flex justify-center gap-3 mt-1"><button onclick="editarSerasa('${s.id}')" class="text-[10px] font-bold text-slate-400 hover:text-blue-500 transition-colors"><i class="fa-solid fa-pen"></i></button><button onclick="excluirSerasa('${s.id}')" class="text-[10px] font-bold text-slate-400 hover:text-rose-500 transition-colors"><i class="fa-solid fa-trash"></i></button></div></td></tr>`;
             });
             res.innerHTML = `<div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Total Original</p><h3 class="text-xl font-black text-slate-500 line-through">${formatarMoeda(tOrig)}</h3></div><div class="bg-white p-5 rounded-3xl shadow-sm border border-emerald-200"><p class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mb-1">Economia Total</p><h3 class="text-xl font-black text-emerald-600">${formatarMoeda(tOrig - tPag)}</h3></div><div class="bg-gradient-to-br from-rose-500 to-orange-500 p-5 rounded-3xl shadow-sm text-white"><p class="text-[10px] font-bold text-rose-100 uppercase tracking-widest mb-1">A Pagar (Total)</p><h3 class="text-xl font-black">${formatarMoeda(tPag)}</h3></div>`;
+        }
+
+        function editarSerasa(id) {
+            let s = serasaItems.find(x => x.id === id); if(!s) return;
+            document.getElementById('edit-serasa-id').value = s.id;
+            document.getElementById('input-desc-serasa').value = s.description;
+            document.getElementById('input-status-serasa').value = s.status;
+            document.getElementById('input-venc-serasa').value = s.dueDate;
+            document.getElementById('input-valor-serasa').value = s.amount;
+            document.getElementById('input-desc-perc-serasa').value = s.discount;
+
+            document.getElementById('titulo-modal-serasa').innerHTML = `<i class="fa-solid fa-pen text-blue-500 mr-2"></i>Editando Dívida/Acordo`;
+            document.getElementById('btn-submit-serasa').innerHTML = "Atualizar Acordo";
+            abrirModal('modal-serasa');
         }
         
         function assumirSerasa(id) { 
             let s = serasaItems.find(x => x.id === id); if(!s) return; const v = s.amount * (1 - s.discount/100); 
-            transactions.unshift({id:gerarId(),type:'expense',description:`Acordo Serasa/Banco: ${s.description}`,amount:v,category:'Acordo/Negociação',status:'pendente',dueDate:s.dueDate,paidDate:''}); 
+            transactions.unshift({id:gerarId(),wallet:'main',type:'expense',description:`Acordo Serasa/Banco: ${s.description}`,amount:v,category:'Acordo/Negociação',status:'pendente',dueDate:s.dueDate,paidDate:''}); 
             serasaItems = serasaItems.filter(x => x.id !== id); 
-            atualizarTudo(); sincronizarNuvem(); mostrarToast('Movido para Despesas!'); 
+            atualizarTudo(); sincronizarNuvem(); mostrarToast('Movido para Despesas Mensais!'); 
         }
         
         function excluirSerasa(id) { 
-            if(!confirm("Tem certeza que deseja excluir esta dívida em negociação?")) return;
+            if(!confirm("Tem certeza que deseja excluir permanentemente esta dívida em negociação?")) return;
             serasaItems = serasaItems.filter(s => s.id !== id); 
-            renderizarSerasa(); sincronizarNuvem(); mostrarToast("Excluído!");
+            renderizarSerasa(); sincronizarNuvem(); mostrarToast("Registro Excluído!");
         }
 
-        // --- GRÁFICOS ---
+        // --- GRÁFICOS (TODAS AS CONTAS) ---
         function renderizarGraficosCompletos() {
             const catC = document.getElementById('chartCategorias'); const balC = document.getElementById('chartBalanco'); const evoC = document.getElementById('chartEvolucao'); if(!catC||!balC||!evoC) return;
             const despCat = {}; let e=0, s=0; let dMap={}; let dc=new Date(); dc.setHours(0,0,0,0); dc.setDate(dc.getDate()-29);
-            for(let i=0;i<30;i++){dMap[dc.toISOString().split('T')[0]]={e:0,s:0}; dc.setDate(dc.getDate()+1);}
+            for(let i=0;i<60;i++){dMap[dc.toISOString().split('T')[0]]={e:0,s:0}; dc.setDate(dc.getDate()+1);} // 30 dias pra tras e 30 p/ frente
+            
             transactions.forEach(t => {
-                const v = parseFloat(t.amount); if(t.status==='pago'){if(t.type==='income')e+=v; else{s+=v; if(mesDeDataString(t.paidDate)===`${ano}-${mes}`)despCat[t.category]=(despCat[t.category]||0)+v;}}
-                let rD = t.status==='pago'?t.paidDate:t.dueDate; if(dMap[rD]){if(t.type==='income')dMap[rD].e+=v; else dMap[rD].s+=v;}
+                const v = parseFloat(t.amount); 
+                let rD = t.status === 'pago' ? t.paidDate : t.dueDate; 
+                
+                // Balanço Global + Categorias (Lê Pago e Pendente pelo Vencimento no Mês)
+                if (t.type === 'income') e += v; else s += v;
+                if (t.type === 'expense' && mesDeDataString(rD) === `${ano}-${mes}`) despCat[t.category] = (despCat[t.category] || 0) + v;
+
+                // Mapeamento Diário
+                if(dMap[rD]){ if(t.type === 'income') dMap[rD].e += v; else dMap[rD].s += v; }
             });
-            let eLb = Object.keys(dMap).sort(); let eVl = []; let cF = 0; eLb.forEach(d => { cF+=(dMap[d].e-dMap[d].s); eVl.push(cF); }); eLb=eLb.map(d=>formatarDataBr(d));
+
+            let eLb = Object.keys(dMap).sort(); let eVl = []; let cF = 0; 
+            // Injeta o Saldo Base
+            eLb.forEach(d => { cF += (dMap[d].e - dMap[d].s); eVl.push(cF); }); 
+            eLb = eLb.map(d => formatarDataBr(d));
+
             const tt = { callbacks: { label: function(c) { return formatarMoeda(c.raw, true); } } };
             if(chCategorias)chCategorias.destroy(); chCategorias = new Chart(catC, { type:'doughnut', data:{labels:Object.keys(despCat), datasets:[{data:Object.values(despCat), backgroundColor:CORES_GRAFICO, borderWidth:0}]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'right'}, tooltip:tt}, cutout:'70%'} });
-            if(chBalanco)chBalanco.destroy(); chBalanco = new Chart(balC, { type:'bar', data:{labels:['Entradas','Saídas'], datasets:[{data:[e,s], backgroundColor:['#10b981','#f43f5e'], borderRadius:6}]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tt}, scales:{y:{display:false}}} });
-            if(chEvolucao)chEvolucao.destroy(); chEvolucao = new Chart(evoC, { type:'line', data:{labels:eLb, datasets:[{label:'Fluxo Acumulado', data:eVl, borderColor:'#3b82f6', backgroundColor:'rgba(59, 130, 246, 0.1)', fill:true, tension:0.4}]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tt}, scales:{y:{display:false}}} });
+            if(chBalanco)chBalanco.destroy(); chBalanco = new Chart(balC, { type:'bar', data:{labels:['Todas Entradas','Todas Saídas'], datasets:[{data:[e,s], backgroundColor:['#10b981','#f43f5e'], borderRadius:6}]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tt}, scales:{y:{display:false}}} });
+            if(chEvolucao)chEvolucao.destroy(); chEvolucao = new Chart(evoC, { type:'line', data:{labels:eLb, datasets:[{label:'Fluxo Acumulado', data:eVl, borderColor:'#3b82f6', backgroundColor:'rgba(59, 130, 246, 0.1)', fill:true, tension:0.4}]}, options:{responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:tt}, scales:{x:{ticks:{maxTicksLimit:10}},y:{display:false}}} });
         }
 
         // --- IMPRESSÃO DE PDF ---
@@ -883,7 +1018,7 @@
                 if(pend.length > 0) {
                     temDivida = true;
                     let html = pend.map(i => `<div class="flex justify-between items-end mb-3 border-b border-slate-100 pb-2"><div><div class="font-black text-slate-800 text-sm">${i.d.description}</div><div class="text-[9px] text-slate-500 font-bold uppercase tracking-widest mt-1">Vencimento: ${formatarDataBr(i.d.dueDate)} | Base NF: ${formatarMoeda(i.d.amount, true)}</div></div><div class="text-right text-base font-black text-slate-900">${formatarMoeda(i.v, true)}</div></div>`).join('');
-                    container.innerHTML += `<div class="mb-8"><h3 class="font-black text-slate-900 text-lg border-b-2 border-slate-800 pb-1 mb-4">FAVORECIDO: ${p.toUpperCase()}</h3>${html}<div class="text-right mt-2"><span class="text-[10px] uppercase font-bold text-slate-400 mr-3">Repasse Total</span><span class="text-xl font-black text-slate-900">${formatarMoeda(tot, true)}</span></div></div>`;
+                    container.innerHTML += `<div class="mb-8 page-break-inside-avoid"><h3 class="font-black text-slate-900 text-lg border-b-2 border-slate-800 pb-1 mb-4">FAVORECIDO: ${p.toUpperCase()}</h3>${html}<div class="text-right mt-2"><span class="text-[10px] uppercase font-bold text-slate-400 mr-3">Repasse Total</span><span class="text-xl font-black text-slate-900">${formatarMoeda(tot, true)}</span></div></div>`;
                 }
             });
             if(!temDivida) container.innerHTML = `<div class="text-center text-slate-400 font-bold text-sm py-10">Não há rateios em aberto para a seleção.</div>`;
@@ -893,70 +1028,38 @@
         function gerarPlanejamento(e) {
             e.preventDefault();
             const renda = parseFloat(document.getElementById('input-renda-coach').value);
-            
-            // Cálculos 50/30/20
-            const nec = renda * 0.50;
-            const des = renda * 0.30;
-            const fut = renda * 0.20;
+            const nec = renda * 0.50; const des = renda * 0.30; const fut = renda * 0.20;
 
-            // Análise do Banco de Dados Atual
             let despesasFixasPendentes = 0;
-            transactions.forEach(t => { if(t.status === 'pendente' && t.type === 'expense') despesasFixasPendentes += t.amount; });
+            transactions.forEach(t => { if(t.status === 'pendente' && t.type === 'expense' && t.wallet !== 'vr') despesasFixasPendentes += t.amount; });
             
             let temSerasa = serasaItems.length > 0;
             let msgPrincipal = "";
 
-            if (temSerasa) {
-                msgPrincipal = `🚨 <strong>ALERTA DE BLINDAGEM:</strong> Identifiquei dívidas no Serasa/Bancos no seu radar. Pague isso IMEDIATAMENTE usando sua alocação de "Futuro" (${formatarMoeda(fut, true)}). Os juros das dívidas sempre serão maiores que os juros de qualquer investimento. Mate o leão hoje.`;
-            } else if (despesasFixasPendentes > nec) {
-                msgPrincipal = `⚠️ <strong>CUIDADO COM O CUSTO DE VIDA:</strong> Suas despesas pendentes já mapeadas (${formatarMoeda(despesasFixasPendentes, true)}) ultrapassam o limite seguro de 50% (${formatarMoeda(nec, true)}) da sua renda. É hora de fazer uma cirurgia nos seus custos fixos, caso contrário, você nunca sobrará dinheiro para investir.`;
-            } else {
-                msgPrincipal = `✅ <strong>SITUAÇÃO SAUDÁVEL:</strong> Seu fluxo de caixa parece controlado. Seu objetivo número 1 este mês é automatizar a transferência de ${formatarMoeda(fut, true)} para sua corretora (ou reserva) no exato dia em que o dinheiro cair. Pague a si mesmo primeiro!`;
-            }
+            if (temSerasa) { msgPrincipal = `🚨 <strong>ALERTA DE BLINDAGEM:</strong> Identifiquei dívidas no Serasa/Bancos no seu radar. Pague isso IMEDIATAMENTE usando sua alocação de "Futuro" (${formatarMoeda(fut, true)}). Os juros das dívidas sempre serão maiores que os juros de qualquer investimento. Mate o leão hoje.`; } 
+            else if (despesasFixasPendentes > nec) { msgPrincipal = `⚠️ <strong>CUIDADO COM O CUSTO DE VIDA:</strong> Suas despesas pendentes já mapeadas (${formatarMoeda(despesasFixasPendentes, true)}) ultrapassam o limite seguro de 50% (${formatarMoeda(nec, true)}) da sua renda. É hora de fazer uma cirurgia nos seus custos fixos.`; } 
+            else { msgPrincipal = `✅ <strong>SITUAÇÃO SAUDÁVEL:</strong> Seu fluxo de caixa parece controlado. Seu objetivo número 1 este mês é automatizar a transferência de ${formatarMoeda(fut, true)} para sua corretora no exato dia em que o dinheiro cair. Pague a si mesmo primeiro!`; }
 
             document.getElementById('coach-insight-main').innerHTML = msgPrincipal;
-
-            // Renderiza Cards
-            document.getElementById('coach-cards').innerHTML = `
-                <div class="bg-white border-l-4 border-rose-500 p-6 rounded-2xl shadow-sm">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Necessidades (50%)</p>
-                    <h4 class="text-2xl font-black text-slate-800 mb-2">${formatarMoeda(nec, true)}</h4>
-                    <p class="text-xs text-slate-500 font-medium">Moradia, mercado, saúde, contas fixas. Limite estrito.</p>
-                </div>
-                <div class="bg-white border-l-4 border-amber-500 p-6 rounded-2xl shadow-sm">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Desejos/Lazer (30%)</p>
-                    <h4 class="text-2xl font-black text-slate-800 mb-2">${formatarMoeda(des, true)}</h4>
-                    <p class="text-xs text-slate-500 font-medium">Restaurantes, compras, streamings, mimos. Viva sem culpa.</p>
-                </div>
-                <div class="bg-white border-l-4 border-emerald-500 p-6 rounded-2xl shadow-sm">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Futuro/Quitação (20%)</p>
-                    <h4 class="text-2xl font-black text-emerald-600 mb-2">${formatarMoeda(fut, true)}</h4>
-                    <p class="text-xs text-slate-500 font-medium">Reserva, investimentos ou quitação agressiva de dívidas.</p>
-                </div>
-            `;
-
+            document.getElementById('coach-cards').innerHTML = `<div class="bg-white border-l-4 border-rose-500 p-6 rounded-2xl shadow-sm"><p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Necessidades (50%)</p><h4 class="text-2xl font-black text-slate-800 mb-2">${formatarMoeda(nec, true)}</h4><p class="text-xs text-slate-500 font-medium">Moradia, mercado, saúde, contas fixas. Limite estrito.</p></div><div class="bg-white border-l-4 border-amber-500 p-6 rounded-2xl shadow-sm"><p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Desejos/Lazer (30%)</p><h4 class="text-2xl font-black text-slate-800 mb-2">${formatarMoeda(des, true)}</h4><p class="text-xs text-slate-500 font-medium">Restaurantes, compras, streamings. Viva sem culpa.</p></div><div class="bg-white border-l-4 border-emerald-500 p-6 rounded-2xl shadow-sm"><p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Futuro/Quitação (20%)</p><h4 class="text-2xl font-black text-emerald-600 mb-2">${formatarMoeda(fut, true)}</h4><p class="text-xs text-slate-500 font-medium">Reserva, investimentos ou quitação de dívidas.</p></div>`;
             document.getElementById('resultado-coach').classList.remove('hidden');
         }
 
-        // --- INICIALIZAÇÃO ---
+        // --- INICIALIZAÇÃO EVENTOS ---
         function atualizarTudo() { 
             atualizarDashboard(); renderizarTabela(); renderizarTabelaDividas(); renderizarSerasa(); 
             if(document.getElementById('tab-charts').classList.contains('active')) renderizarGraficosCompletos(); 
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializa a Nuvem
             carregarBancoDeDados();
-
-            // Set default dates
             document.querySelectorAll('input[type="date"]').forEach(el => el.value = new Date().toISOString().split('T')[0]);
-            
             document.getElementById('icon-privacy').className = privacyMode ? 'fa-solid fa-eye-slash text-sm' : 'fa-solid fa-eye text-sm text-blue-600';
 
-            // EVENTOS DE SUBMIT
             document.getElementById('form-lancamento')?.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const idEdit = document.getElementById('edit-lancamento-id').value;
+                const wallet = document.getElementById('input-conta').value;
                 const type = document.getElementById('input-tipo').value;
                 const description = document.getElementById('input-descricao').value;
                 const amount = parseFloat(document.getElementById('input-valor').value);
@@ -967,10 +1070,10 @@
 
                 if (idEdit) {
                     let t = transactions.find(x => x.id === idEdit);
-                    if(t) { t.type = type; t.description = description; t.amount = amount; t.category = category; t.status = status; t.dueDate = dueDate; t.paidDate = paidDate; }
+                    if(t) { t.wallet = wallet; t.type = type; t.description = description; t.amount = amount; t.category = category; t.status = status; t.dueDate = dueDate; t.paidDate = paidDate; }
                     mostrarToast('Lançamento Atualizado!');
                 } else {
-                    transactions.unshift({ id: gerarId(), type, description, amount, category, status, dueDate, paidDate });
+                    transactions.unshift({ id: gerarId(), wallet, type, description, amount, category, status, dueDate, paidDate });
                     mostrarToast('Lançamento Registrado!');
                 }
                 
@@ -981,19 +1084,35 @@
 
             document.getElementById('form-divida')?.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const idEdit = document.getElementById('edit-rateio-id').value; const origin = document.getElementById('input-tipo-divida').value; const description = document.getElementById('input-descricao-divida').value; const dueDate = document.getElementById('input-vencimento-divida').value; const amount = parseFloat(document.getElementById('input-valor-divida').value); const hasAtt = document.getElementById('icon-anexo').classList.contains('text-emerald-500');
+                const idEdit = document.getElementById('edit-rateio-id').value; const origin = document.getElementById('input-tipo-divida').value; const description = document.getElementById('input-descricao-divida').value; const dueDate = document.getElementById('input-vencimento-divida').value; const amount = parseFloat(document.getElementById('input-valor-divida').value); 
                 let sW = []; pessoasCadastradas.forEach(p => { const c = document.getElementById(`check-pessoa-${p}`); if(c && c.checked) sW.push(p); });
                 let mS = amount; let sh = {}; let pd = {};
                 if (sW.length > 0) { mS = amount/3; let vR = (amount*2)/3; let cP = vR/sW.length; sW.forEach(p => { sh[p]=cP; pd[p]=0; }); }
-                if(idEdit) { let d = debts.find(x => x.id === idEdit); if(d) { d.origin=origin; d.description=description; d.dueDate=dueDate; d.amount=amount; d.sharedWith=sW; d.myShare=mS; d.shares=sh; d.hasAttachment=hasAtt; d.myPaid=0; d.paid=pd; } mostrarToast('Rateio Atualizado!'); } 
-                else { debts.unshift({ id: gerarId(), origin, description, amount, dueDate, sharedWith:sW, myShare:mS, myPaid: 0, shares:sh, paid:pd, hasAttachment:hasAtt }); mostrarToast('Rateio Salvo!'); e.target.reset(); document.getElementById('input-vencimento-divida').value = new Date().toISOString().split('T')[0]; renderizarCheckboxesPessoas(); }
+                
+                if(idEdit) { let d = debts.find(x => x.id === idEdit); if(d) { d.origin=origin; d.description=description; d.dueDate=dueDate; d.amount=amount; d.sharedWith=sW; d.myShare=mS; d.shares=sh; d.hasAttachment=anexoAtual; d.myPaid=0; d.paid=pd; } mostrarToast('Rateio Atualizado!'); } 
+                else { debts.unshift({ id: gerarId(), origin, description, amount, dueDate, sharedWith:sW, myShare:mS, myPaid: 0, shares:sh, paid:pd, hasAttachment:anexoAtual }); mostrarToast('Rateio Salvo!'); e.target.reset(); document.getElementById('input-vencimento-divida').value = new Date().toISOString().split('T')[0]; }
                 fecharModal('modal-rateio'); cancelarEdicaoRateio(); atualizarTudo(); sincronizarNuvem();
             });
 
             document.getElementById('form-serasa')?.addEventListener('submit', (e) => {
                 e.preventDefault();
-                serasaItems.unshift({ id: gerarId(), description: document.getElementById('input-desc-serasa').value, status: document.getElementById('input-status-serasa').value, dueDate: document.getElementById('input-venc-serasa').value, amount: parseFloat(document.getElementById('input-valor-serasa').value), discount: parseFloat(document.getElementById('input-desc-perc-serasa').value) });
-                atualizarTudo(); sincronizarNuvem(); mostrarToast('Acordo Adicionado!'); e.target.reset(); document.getElementById('input-venc-serasa').value = new Date().toISOString().split('T')[0]; fecharModal('modal-serasa');
+                const idEdit = document.getElementById('edit-serasa-id').value;
+                const description = document.getElementById('input-desc-serasa').value;
+                const status = document.getElementById('input-status-serasa').value;
+                const dueDate = document.getElementById('input-venc-serasa').value;
+                const amount = parseFloat(document.getElementById('input-valor-serasa').value);
+                const discount = parseFloat(document.getElementById('input-desc-perc-serasa').value);
+
+                if (idEdit) {
+                    let s = serasaItems.find(x => x.id === idEdit);
+                    if(s) { s.description = description; s.status = status; s.dueDate = dueDate; s.amount = amount; s.discount = discount; }
+                    mostrarToast('Simulação Atualizada!');
+                } else {
+                    serasaItems.unshift({ id: gerarId(), description, status, dueDate, amount, discount });
+                    mostrarToast('Acordo Adicionado!');
+                }
+                
+                atualizarTudo(); sincronizarNuvem(); e.target.reset(); document.getElementById('input-venc-serasa').value = new Date().toISOString().split('T')[0]; fecharModal('modal-serasa');
             });
         });
     </script>
